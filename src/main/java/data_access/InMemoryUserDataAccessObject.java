@@ -17,7 +17,6 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
                                                      ChangePasswordUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
-
     private String currentUser;
 
     @Override
