@@ -43,8 +43,6 @@ public class LoginInteractorTest {
         LoginInputData inputData = new LoginInputData("Paul", "password");
         LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        assertNull(userRepository.getCurrentUser());
-
         // For the success test, we need to add Paul to the data access repository before we log in.
         UserFactory factory = new CommonUserFactory();
         User user = factory.create("Paul", "password");
@@ -65,6 +63,7 @@ public class LoginInteractorTest {
             }
         };
 
+        assertNull(userRepository.getCurrentUser());
         LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
         interactor.execute(inputData);
 
