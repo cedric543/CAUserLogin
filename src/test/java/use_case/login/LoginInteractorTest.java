@@ -39,6 +39,7 @@ public class LoginInteractorTest {
         interactor.execute(inputData);
     }
 
+    @Test
     public void successUserLoggedInTest() {
         LoginInputData inputData = new LoginInputData("Paul", "password");
         LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
@@ -47,8 +48,6 @@ public class LoginInteractorTest {
         UserFactory factory = new CommonUserFactory();
         User user = factory.create("Paul", "password");
         userRepository.save(user);
-
-        assertEquals("paul", userRepository.getCurrentUser());
 
         // This creates a successPresenter that tests whether the test case is as we expect.
         LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
@@ -63,14 +62,11 @@ public class LoginInteractorTest {
             }
         };
 
-        assertNull(userRepository.getCurrentUser());
         LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
+        assertNull(userRepository.getCurrentUser());
         interactor.execute(inputData);
-
-        // After login, check that the user "Paul" is now the current user
         assertEquals("Paul", userRepository.getCurrentUser());
     }
-
 
     @Test
     public void failurePasswordMismatchTest() {
